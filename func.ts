@@ -1,36 +1,19 @@
-function mergeWithoutSort(collection_1: number[], collection_2: number[], collection_3: number[]): number[] {
-    const result: number[] = [];
-    let i: number = 0, j: number = 0;
+function merge(collection_1: number[], collection_2: number[], collection_3: number[]): number[] {
+    const mergedResult: number[] = [...collection_1, ...collection_2, ...collection_3];
 
-    //Comapre and merge collection_1 and collection_2 in the order. For example, there is length of 3 in array1,2. So, we check 3 times and the rest will do in the next one
-    while (i < collection_1.length && j < collection_2.length) {
-        if (collection_1[i] < collection_2[j]) {
-            result.push(collection_1[i]);
-            i++;
-        } else {
-            result.push(collection_2[j]);
-            j++;
+    // Bubble Sort
+    for (let i = 0; i < mergedResult.length - 1; i++) {
+        for (let j = 0; j < mergedResult.length - 1 - i; j++) {
+            if (mergedResult[j] > mergedResult[j + 1]) {
+                // Swap elements if they are in the wrong order
+                const temp = mergedResult[j];
+                mergedResult[j] = mergedResult[j + 1];
+                mergedResult[j + 1] = temp;
+            }
         }
     }
 
-    // This one will add the remaining elements from collection_1 like [1,2,4] and [3,5,6] it will add [1,2,3] in result first as it is in the first while loop function
-    while (i < collection_1.length) {
-        result.push(collection_1[i]);
-        i++;
-    }
-
-    // This one does the same as the previous one but for collection_2
-    while (j < collection_2.length) {
-        result.push(collection_2[j]);
-        j++;
-    }
-    //We assume that the collection_3 is from the max to min จะไม่มีตัวเลขที่วลับที่กันเหมือนใน test case2 ของ collection_1 and collection_2
-    // Merge with reversed collection_3 at the end
-    for (let k = collection_3.length - 1; k >= 0; k--) {
-        result.push(collection_3[k]);
-    }
-
-    return result;
+    return mergedResult;
 }
 
-export default mergeWithoutSort;
+export default merge;
